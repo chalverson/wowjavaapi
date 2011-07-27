@@ -1,0 +1,11 @@
+{
+  "lastModified":1311719935000,
+  "name":"Borvoh",
+  "realm":"Duskwood",
+  "class":5,
+  "race":4,
+  "gender":0,
+  "level":85,
+  "achievementPoints":7435,
+  "thumbnail":"duskwood/240/209136-avatar.jpg"
+}

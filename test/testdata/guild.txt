@@ -1,0 +1,8 @@
+{
+  "lastModified":1311638506000,
+  "name":"House of Stryke",
+  "realm":"Duskwood",
+  "level":25,
+  "side":0,
+  "achievementPoints":910
+}

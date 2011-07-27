@@ -1,0 +1,119 @@
+{
+  "lastModified":1311637171000,
+  "name":"Borvoh",
+  "realm":"Duskwood",
+  "class":5,
+  "race":4,
+  "gender":0,
+  "level":85,
+  "achievementPoints":7425,
+  "thumbnail":"duskwood/240/209136-avatar.jpg",
+  "talents":[
+    {
+      "selected":true,
+      "name":"Shadow",
+      "icon":"spell_shadow_shadowwordpain",
+      "build":"032210000000000000000000000000000000000000322222210211222100231",
+      "trees":[
+        {
+          "points":"032210000000000000000",
+          "total":8
+        },
+        {
+          "points":"000000000000000000000",
+          "total":0
+        },
+        {
+          "points":"322222210211222100231",
+          "total":33
+        }
+      ],
+      "glyphs":{
+        "prime":[
+          {
+            "glyph":269,
+            "item":42415,
+            "name":"Glyph of Mind Flay",
+            "icon":"spell_shadow_siphonmana"
+          },
+          {
+            "glyph":268,
+            "item":42414,
+            "name":"Glyph of Shadow Word: Death",
+            "icon":"spell_shadow_demonicfortitude"
+          },
+          {
+            "glyph":261,
+            "item":42406,
+            "name":"Glyph of Shadow Word: Pain",
+            "icon":"spell_shadow_shadowwordpain"
+          }
+        ],
+        "major":[
+          {
+            "glyph":257,
+            "item":42402,
+            "name":"Glyph of Inner Fire",
+            "icon":"spell_holy_innerfire"
+          },
+          {
+            "glyph":265,
+            "item":42410,
+            "name":"Glyph of Psychic Scream",
+            "icon":"spell_shadow_psychicscream"
+          },
+          {
+            "glyph":711,
+            "item":45757,
+            "name":"Glyph of Spirit Tap",
+            "icon":"spell_shadow_requiem"
+          }
+        ],
+        "minor":[
+          {
+            "glyph":458,
+            "item":43342,
+            "name":"Glyph of Fading",
+            "icon":"ability_mage_invisibility"
+          },
+          {
+            "glyph":459,
+            "item":43370,
+            "name":"Glyph of Levitate",
+            "icon":"spell_holy_layonhands"
+          },
+          {
+            "glyph":463,
+            "item":43374,
+            "name":"Glyph of Shadowfiend",
+            "icon":"spell_shadow_shadowfiend"
+          }
+        ]
+      }
+    },
+    {
+      "name":"Holy",
+      "icon":"spell_holy_guardianspirit",
+      "build":"033210000000000000000233122220211201103211000000000000000000000",
+      "trees":[
+        {
+          "points":"033210000000000000000",
+          "total":9
+        },
+        {
+          "points":"233122220211201103211",
+          "total":32
+        },
+        {
+          "points":"000000000000000000000",
+          "total":0
+        }
+      ],
+      "glyphs":{
+        "prime":[],
+        "major":[],
+        "minor":[]
+      }
+    }
+  ]
+}

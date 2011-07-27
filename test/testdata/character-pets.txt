@@ -1,0 +1,29 @@
+{
+  "lastModified":1309926642000,
+  "name":"Velodan",
+  "realm":"Duskwood",
+  "class":3,
+  "race":4,
+  "gender":0,
+  "level":85,
+  "achievementPoints":1370,
+  "thumbnail":"duskwood/17/16501265-avatar.jpg",
+  "pets":[
+    {
+      "name":"Wraith",
+      "creature":3619,
+      "selected":true,
+      "slot":0
+    },
+    {
+      "name":"Beetle",
+      "creature":51674,
+      "slot":2
+    },
+    {
+      "name":"Gorilla",
+      "creature":9622,
+      "slot":1
+    }
+  ]
+}
