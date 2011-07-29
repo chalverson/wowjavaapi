@@ -1,16 +1,33 @@
+/*
+ * Copyright (c) 2011 Chris D. Halverson <cdh@halverson.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.halverson.wowapi.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
+ * Class that represents a character. This is the main entry class for the character queries.
+ *
  */
 @SuppressWarnings({"UnusedDeclaration"})
-public class Character implements Serializable {
+public class Character implements Comparable<Character> {
     private String name;
     private int level;
     private String realm;
@@ -25,7 +42,7 @@ public class Character implements Serializable {
     @SerializedName("class")
     private int classId;
 
-    private transient Gender gender;
+    //private transient Gender gender;
     @SuppressWarnings({"FieldCanBeLocal"})
     private transient Race race;
 
@@ -203,7 +220,6 @@ public class Character implements Serializable {
 
     public void setGenderId(int genderId) {
         this.genderId = genderId;
-        this.gender = Gender.get(genderId);
     }
 
     public int getClassId() {
@@ -236,5 +252,55 @@ public class Character implements Serializable {
         sb.append(", characterClass=").append(getCharacterClass());
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * Tests just he basic attributes that are always returned.
+     *
+     * @param o Character to test against
+     * @return true if characters are the same, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Character character = (Character) o;
+
+        if (achievementPoints != character.achievementPoints) return false;
+        if (classId != character.classId) return false;
+        if (genderId != character.genderId) return false;
+        if (lastModified != character.lastModified) return false;
+        if (level != character.level) return false;
+        if (raceId != character.raceId) return false;
+        if (name != null ? !name.equals(character.name) : character.name != null) return false;
+        if (realm != null ? !realm.equals(character.realm) : character.realm != null) return false;
+        if (thumbnail != null ? !thumbnail.equals(character.thumbnail) : character.thumbnail != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + level;
+        result = 31 * result + (realm != null ? realm.hashCode() : 0);
+        result = 31 * result + (int) (lastModified ^ (lastModified >>> 32));
+        result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
+        result = 31 * result + raceId;
+        result = 31 * result + achievementPoints;
+        result = 31 * result + genderId;
+        result = 31 * result + classId;
+        return result;
+    }
+
+    /**
+     * Allows sorting by name
+     * @param o Character to compare to
+     * @return
+     */
+    @Override
+    public int compareTo(Character o) {
+        return this.name.compareTo(o.getName());
     }
 }

@@ -17,22 +17,21 @@
 package org.halverson.wowapi.exception;
 
 /**
- * Exception for 4xx errors.
- *
+ * Base exception class.
  */
-public class CharacterNotFoundException extends WowApiException {
-    public CharacterNotFoundException() {
+public class WowApiException extends Exception {
+    public WowApiException() {
     }
 
-    public CharacterNotFoundException(String message) {
+    public WowApiException(String message) {
         super(message);
     }
 
-    public CharacterNotFoundException(String message, Throwable cause) {
+    public WowApiException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public CharacterNotFoundException(Throwable cause) {
+    public WowApiException(Throwable cause) {
         super(cause);
     }
 }

@@ -1,9 +1,25 @@
+/*
+ * Copyright (c) 2011 Chris D. Halverson <cdh@halverson.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.halverson.wowapi.dao;
 
-import org.halverson.wowapi.testutil.TestUtil;
-import org.halverson.wowapi.entity.*;
 import org.halverson.wowapi.entity.Character;
+import org.halverson.wowapi.entity.*;
 import org.halverson.wowapi.exception.CharacterNotFoundException;
+import org.halverson.wowapi.testutil.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.matchers.JUnitMatchers.hasItem;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -42,7 +58,7 @@ public class CharacterDaoTest {
         when(dao.getCharacter(REALM, NAME, CharacterOptions.PETS)).thenReturn(TestUtil.getCharacterJson("character-nopets.txt"));
         when(dao.getCharacter(REALM, NAME, CharacterOptions.PROFESSIONS)).thenReturn(TestUtil.getCharacterJson("character-professions.txt"));
         when(dao.getCharacter(REALM, "Velodan", CharacterOptions.PETS)).thenReturn(TestUtil.getCharacterJson("character-pets.txt"));
-        when(dao.getCharacter(REALM, "Borvoh1")).thenThrow(new CharacterNotFoundException());
+        when(dao.getCharacter(REALM, "Borvoh1")).thenThrow(new CharacterNotFoundException("Character not found."));
     }
 
 

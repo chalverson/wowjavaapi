@@ -17,50 +17,40 @@
 package org.halverson.wowapi.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-@SuppressWarnings({"UnusedDeclaration"})
-public class Titles implements Serializable, Comparable<Titles> {
-    private int id;
-    private String name;
-    private boolean selected;
+/**
+ * Class representing realm status. Just contains a list of realm objects.
+ *
+ * @author Chris D. Halverson
+ */
+public class RealmStatus implements Serializable {
+    private List<Realm> realms;
 
-    public boolean isSelected() {
-        return selected;
+    /**
+     * Get the list of realm status objects.
+     *
+     * @return List of realm status
+     */
+    public List<Realm> getRealms() {
+        return realms;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    /**
+     * Set the realm status objects
+     *
+     * @param realms
+     */
+    public void setRealms(List<Realm> realms) {
+        this.realms = realms;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("Titles");
-        sb.append("{id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", selected=").append(selected);
+        sb.append("RealmStatus");
+        sb.append("{realms=").append(realms);
         sb.append('}');
         return sb.toString();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public int compareTo(Titles o) {
-        return name.compareTo(o.toString());
     }
 }

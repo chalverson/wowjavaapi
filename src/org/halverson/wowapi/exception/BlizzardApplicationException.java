@@ -17,22 +17,22 @@
 package org.halverson.wowapi.exception;
 
 /**
- * Exception for 4xx errors.
+ * Exception used for 5xx errors. These are application level errors.
  *
  */
-public class CharacterNotFoundException extends WowApiException {
-    public CharacterNotFoundException() {
+public class BlizzardApplicationException extends WowApiException {
+    public BlizzardApplicationException() {
     }
 
-    public CharacterNotFoundException(String message) {
+    public BlizzardApplicationException(String message) {
         super(message);
     }
 
-    public CharacterNotFoundException(String message, Throwable cause) {
+    public BlizzardApplicationException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public CharacterNotFoundException(Throwable cause) {
+    public BlizzardApplicationException(Throwable cause) {
         super(cause);
     }
 }

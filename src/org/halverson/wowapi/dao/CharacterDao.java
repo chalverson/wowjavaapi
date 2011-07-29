@@ -1,16 +1,45 @@
+/*
+ * Copyright (c) 2011 Chris D. Halverson <cdh@halverson.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.halverson.wowapi.dao;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.halverson.wowapi.connection.BlizzardApiConnection;
-import org.halverson.wowapi.entity.*;
+import org.halverson.wowapi.entity.BlizzardErrorResponse;
 import org.halverson.wowapi.entity.Character;
+import org.halverson.wowapi.entity.CharacterOptions;
+import org.halverson.wowapi.entity.Region;
+import org.halverson.wowapi.exception.BlizzardApplicationException;
 import org.halverson.wowapi.exception.CharacterNotFoundException;
+import org.halverson.wowapi.exception.WowApiException;
 
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.halverson.wowapi.util.Util.join;
+
+/**
+ * Data access object to fetch a WoW Character.
+ */
 
 @SuppressWarnings({"UnusedDeclaration"})
 public class CharacterDao {
@@ -20,34 +49,96 @@ public class CharacterDao {
 
     private Region region;
 
+    /**
+     * Default constructor will use the US Region.
+     */
     public CharacterDao() {
         this.region = Region.US;
     }
 
+    /**
+     * Constructor specifying a region.
+     *
+     * @param region to query
+     * @see Region
+     */
     public CharacterDao(Region region) {
         this.region = region;
     }
 
-    public Character getCharacter(Region region, String realm, String name) throws CharacterNotFoundException {
-
+    /**
+     * Get a character from Blizzard based on the options. Defaults to base record set.
+     *
+     * @param region The region to query
+     * @param realm The realm to query
+     * @param name The character's name
+     * @return The specified character
+     * @throws WowApiException Error if a connection issue or character is not found
+     * @see #getCharacter(org.halverson.wowapi.entity.Region, String, String, java.util.EnumSet)
+     */
+    public Character getCharacter(Region region, String realm, String name) throws WowApiException {
         return getCharacter(region, realm, name, EnumSet.of(CharacterOptions.BASE));
     }
 
-    public Character getCharacter(String realm, String name) throws CharacterNotFoundException {
+    /**
+     * Get a character from Blizzard based on the options. Defaults to base record set.
+     *
+     * @param realm The realm to query
+     * @param name The character's name
+     * @return The specified character
+     * @throws WowApiException Error if a connection issue or character is not found
+     * @see #getCharacter(org.halverson.wowapi.entity.Region, String, String, java.util.EnumSet)
+     */
+    public Character getCharacter(String realm, String name) throws WowApiException {
         return getCharacter(region, realm, name, EnumSet.of(CharacterOptions.BASE));
     }
 
-    public Character getCharacter(String realm, String name, EnumSet<CharacterOptions> options) throws CharacterNotFoundException {
+    /**
+     * Get a character from Blizzard based on the options.
+     *
+     * @param realm The realm to query
+     * @param name The character's name
+     * @param options The set of CharacterOptions to fetch
+     * @return The specified character
+     * @throws WowApiException Error if a connection issue or character is not found
+     * @see #getCharacter(org.halverson.wowapi.entity.Region, String, String, java.util.EnumSet)
+     */
+    public Character getCharacter(String realm, String name, EnumSet<CharacterOptions> options) throws WowApiException {
         return getCharacter(region, realm, name, options);
     }
 
-    public Character getCharacter(String realm, String name, CharacterOptions... options) throws CharacterNotFoundException {
-
+    /**
+     * Get a character from Blizzard based on the options.
+     *
+     * @param realm The realm to query
+     * @param name The character's name
+     * @param options varargs list of options
+     * @return The specified character
+     * @throws WowApiException Error if a connection issue or character is not found
+     * @see #getCharacter(org.halverson.wowapi.entity.Region, String, String, java.util.EnumSet)
+     */
+    public Character getCharacter(String realm, String name, CharacterOptions... options) throws WowApiException {
         List<CharacterOptions> o = Arrays.asList(options);
         return getCharacter(region, realm, name, EnumSet.copyOf(o));
     }
 
-    public Character getCharacter(Region region, String realm, String name, EnumSet<CharacterOptions> options) throws CharacterNotFoundException {
+    /**
+     * Get a character from Blizzard based on the options.
+     *
+     * @param region The region to query
+     * @param realm The realm to query
+     * @param name The character's name
+     * @param options The set of CharacterOptions to fetch
+     * @return The specified character
+     * @throws WowApiException Error if a connection issue or character is not found
+     */
+    public Character getCharacter(Region region, String realm, String name, EnumSet<CharacterOptions> options) throws WowApiException {
+
+        checkNotNull(region);
+        checkNotNull(realm);
+        checkNotNull(name);
+        checkArgument(realm.length() != 0);
+        checkArgument(name.length() != 0);
 
         URI uri = null;
         try {
@@ -61,7 +152,7 @@ public class CharacterDao {
 
         // We control the optional parts, and there aren't any issues with needing encoding
         String json = BlizzardApiConnection.getStringJSONFromRequest(uri.toString() + optionalQuery(options));
-        System.out.println("JSON: " + json);
+        //System.out.println("JSON: " + json);
         Gson gson = new Gson();
 
         BlizzardErrorResponse errorResponse = gson.fromJson(json, BlizzardErrorResponse.class);
@@ -69,14 +160,16 @@ public class CharacterDao {
         if (!errorResponse.getStatus().equals("")) {
             // Would check for specific error here
             if("Character not found.".equals(errorResponse.getReason())) {
-                throw new CharacterNotFoundException();
+                throw new CharacterNotFoundException(errorResponse.getReason());
+            } else {
+                throw new BlizzardApplicationException(errorResponse.getReason());
             }
-
         }
 
         return gson.fromJson(json, Character.class);
     }
 
+    // Create a query string
     private String optionalQuery(EnumSet<CharacterOptions> options) {
         if (options.size() == 0 || (options.size() == 1) && options.contains(CharacterOptions.BASE)) {
             return "";
@@ -93,45 +186,4 @@ public class CharacterDao {
 
     }
 
-    // Just so I don't have to use another library
-    private String join(Iterable<String> s, String delimiter) {
-        if (s == null) return "";
-        Iterator<String> iter = s.iterator();
-        StringBuilder builder = new StringBuilder(iter.next());
-        while (iter.hasNext()) {
-            builder.append(delimiter).append(iter.next());
-        }
-        return builder.toString();
-    }
-
-    private static class BlizzardErrorResponse {
-        private String status = "";
-        private String reason = "";
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-
-        public void setReason(String reason) {
-            this.reason = reason;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder();
-            sb.append("BlizzardErrorResponse");
-            sb.append("{status='").append(status).append('\'');
-            sb.append(", reason='").append(reason).append('\'');
-            sb.append('}');
-            return sb.toString();
-        }
-    }
 }

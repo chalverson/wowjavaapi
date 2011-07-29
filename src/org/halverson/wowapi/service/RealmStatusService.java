@@ -14,25 +14,17 @@
  * limitations under the License.
  */
 
-package org.halverson.wowapi.exception;
+package org.halverson.wowapi.service;
 
-/**
- * Exception for 4xx errors.
- *
- */
-public class CharacterNotFoundException extends WowApiException {
-    public CharacterNotFoundException() {
-    }
+import com.sun.istack.internal.Nullable;
+import org.halverson.wowapi.dao.RealmDao;
+import org.halverson.wowapi.entity.RealmStatus;
+import org.halverson.wowapi.exception.CharacterNotFoundException;
 
-    public CharacterNotFoundException(String message) {
-        super(message);
-    }
+public class RealmStatusService {
+    private RealmDao dao;
 
-    public CharacterNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public CharacterNotFoundException(Throwable cause) {
-        super(cause);
+    public RealmStatus getRealmStatus(@Nullable String... realms) throws CharacterNotFoundException {
+        return dao.getRealmStatus(realms);
     }
 }

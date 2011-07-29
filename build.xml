@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2011 Chris D. Halverson <cdh@halverson.org>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project name="wowjavaapi" default="dist" basedir=".">
+    <property name="src.dir" value="src"/>
+    <property name="lib.dir" value="lib" />
+    <property name="dist.dir" value="dist" />
+    <property name="build.dir" value="build" />
+    <property name="docs.dir" value="docs" />
+
+    <path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+    <classpath>
+       <pathelement path="${classpath}"/>
+       <fileset dir="lib">
+         <include name="**/*.jar"/>
+       </fileset>
+    </classpath>
+
+    <target name="init">
+        <tstamp/>
+        <mkdir dir="${build.dir}" />
+    </target>
+
+    <target name="compile" description="Compile the sources" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" />
+    </target>
+
+    <target name="dist" depends="compile" description="Create a distribution jar file">
+
+    </target>
+
+    <target name="clean" description="Clean out compiled classes">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="docs" depends="compile">
+		<javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
+			<!-- Define which files / directory should get included, we include all -->
+			<fileset dir="${src.dir}">
+				<include name="**" />
+			</fileset>
+		</javadoc>
+	</target>
+
+</project>

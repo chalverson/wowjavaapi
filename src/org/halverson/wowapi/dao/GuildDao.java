@@ -1,7 +1,24 @@
+/*
+ * Copyright (c) 2011 Chris D. Halverson <cdh@halverson.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.halverson.wowapi.dao;
 
 import com.google.gson.Gson;
 import org.halverson.wowapi.connection.BlizzardApiConnection;
+import org.halverson.wowapi.entity.BlizzardErrorResponse;
 import org.halverson.wowapi.entity.Guild;
 import org.halverson.wowapi.entity.GuildOptions;
 import org.halverson.wowapi.entity.Region;
@@ -10,6 +27,13 @@ import org.halverson.wowapi.exception.CharacterNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+/**
+ * Data access object to get Guild information.
+ */
 
 @SuppressWarnings({"UnusedDeclaration"})
 public class GuildDao {
@@ -48,6 +72,12 @@ public class GuildDao {
 
     public Guild getGuild(Region region, String realm, String name, EnumSet<GuildOptions> options) throws CharacterNotFoundException {
 
+        checkNotNull(region);
+        checkNotNull(realm);
+        checkNotNull(name);
+        checkArgument(realm.length() != 0);
+        checkArgument(name.length() != 0);
+
         URI uri = null;
         try {
             uri = new URI("https", String.format(URL_BASE, region), String.format(GUILD_API_URL, realm, name), null);
@@ -60,7 +90,7 @@ public class GuildDao {
 
         // We control the optional parts, and there aren't any issues with needing encoding
         String json = BlizzardApiConnection.getStringJSONFromRequest(uri.toString() + optionalQuery(options));
-        System.out.println("JSON: " + json);
+        //System.out.println("JSON: " + json);
         Gson gson = new Gson();
 
         BlizzardErrorResponse errorResponse = gson.fromJson(json, BlizzardErrorResponse.class);
@@ -103,34 +133,4 @@ public class GuildDao {
         return builder.toString();
     }
 
-    private static class BlizzardErrorResponse {
-        private String status = "";
-        private String reason = "";
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-
-        public void setReason(String reason) {
-            this.reason = reason;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder();
-            sb.append("BlizzardErrorResponse");
-            sb.append("{status='").append(status).append('\'');
-            sb.append(", reason='").append(reason).append('\'');
-            sb.append('}');
-            return sb.toString();
-        }
-    }
 }
