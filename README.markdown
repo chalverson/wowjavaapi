@@ -20,14 +20,14 @@ Use at your own risk, this comes with no warranty.
 Dependencies
 ============
 
-* [http://code.google.com/p/google-gson/](Google Gson) is required to use this API. The allows the parsing of JSON
+* [Google Gson](http://code.google.com/p/google-gson/) is required to use this API. The allows the parsing of JSON
 directly into Java objects. Plus I didn't want to reinvent the wheel.
 
-* [http://mockito.org/](Mockito) for unit testing
+* [Mockito](http://mockito.org/) for unit testing
 
-* [http://junit.org/](JUnit) for unit testing
+* [JUnit](http://junit.org/) for unit testing
 
-The argument checking code was taken from [http://code.google.com/p/guava-libraries/](Google Guava).
+The argument checking code was taken from [Google Guava](http://code.google.com/p/guava-libraries/).
 
 Usage
 =====
