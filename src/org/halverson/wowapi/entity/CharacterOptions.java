@@ -18,9 +18,15 @@ package org.halverson.wowapi.entity;
 
 import java.util.EnumSet;
 
+/**
+ * Listing of the various types of data that can be retrieved for a character.
+ */
+
 @SuppressWarnings({"UnusedDeclaration"})
 public enum CharacterOptions {
-    BASE(""), GUILD("guild"), STATS("stats"), TALENTS("talents"), ITEMS("items"), REPUTATION("reputation"), TITLES("titles"), PROFESSIONS("professions"), APPEARANCE("appearance"), COMPANIONS("companions"), MOUNTS("mounts"), PETS("pets"), ACHIEVEMENTS("achievements"), PROGRESSION("progression");
+    BASE(""), GUILD("guild"), STATS("stats"), TALENTS("talents"), ITEMS("items"), REPUTATION("reputation"),
+    TITLES("titles"), PROFESSIONS("professions"), APPEARANCE("appearance"), COMPANIONS("companions"),
+    MOUNTS("mounts"), PETS("pets"), ACHIEVEMENTS("achievements"), PROGRESSION("progression");
 
     private String description;
 

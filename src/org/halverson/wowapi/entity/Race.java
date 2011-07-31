@@ -20,9 +20,16 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Listing of the available races.
+ */
+
 @SuppressWarnings({"UnusedDeclaration"})
 public enum Race {
-    HUMAN(1, "Human"), ORC(2, "Orc"), DWARF(3, "Dwarf"), NIGHTELF(4, "Night Elf"), UNDEAD(5, "Undead"), GNOME(7, "Gnome"), TROLL(8, "Troll"), GOBLIN(9, "Goblin"), BLOODELF(10, "Blood Elf"), DRAENEI(11, "Draenei"), TAUREN(14, "Tauren"), WORGEN(22, "Worgen");
+    HUMAN(1, "Human"), ORC(2, "Orc"), DWARF(3, "Dwarf"), NIGHTELF(4, "Night Elf"), UNDEAD(5, "Undead"),
+    GNOME(7, "Gnome"), TROLL(8, "Troll"), GOBLIN(9, "Goblin"), BLOODELF(10, "Blood Elf"), DRAENEI(11, "Draenei"),
+    TAUREN(14, "Tauren"), WORGEN(22, "Worgen");
+
     private int race;
     private String name;
 

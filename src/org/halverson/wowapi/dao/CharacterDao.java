@@ -25,6 +25,7 @@ import org.halverson.wowapi.entity.Region;
 import org.halverson.wowapi.exception.BlizzardApplicationException;
 import org.halverson.wowapi.exception.CharacterNotFoundException;
 import org.halverson.wowapi.exception.WowApiException;
+import org.halverson.wowapi.util.Util;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,9 +34,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.halverson.wowapi.util.Util.join;
+import static org.halverson.wowapi.util.Util.*;
 
 /**
  * Data access object to fetch a WoW Character.
@@ -125,6 +124,8 @@ public class CharacterDao {
     /**
      * Get a character from Blizzard based on the options.
      *
+     * This will correctly encode the URL and the options.
+     *
      * @param region The region to query
      * @param realm The realm to query
      * @param name The character's name
@@ -135,7 +136,7 @@ public class CharacterDao {
     public Character getCharacter(Region region, String realm, String name, EnumSet<CharacterOptions> options) throws WowApiException {
 
         checkNotNull(region);
-        checkNotNull(realm);
+        Util.checkNotNull(realm);
         checkNotNull(name);
         checkArgument(realm.length() != 0);
         checkArgument(name.length() != 0);

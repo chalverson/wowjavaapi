@@ -26,8 +26,8 @@ import java.util.Map;
 
 @SuppressWarnings({"UnusedDeclaration"})
 public enum CharacterClass {
-    WARRIOR(1, "Warrior"), PALADIN(2, "Paladin"), HUNTER(3, "Hunter"), ROGUE(4, "Rogue"), PRIEST(5, "Priest"), DEATHKNIGHT(6, "Death Knight"),
-    SHAMAN(7, "Shaman"), MAGE(8, "Mage"), WARLOCK(9, "Warlock"), DRUID(11, "Druid");
+    WARRIOR(1, "Warrior"), PALADIN(2, "Paladin"), HUNTER(3, "Hunter"), ROGUE(4, "Rogue"), PRIEST(5, "Priest"),
+    DEATHKNIGHT(6, "Death Knight"), SHAMAN(7, "Shaman"), MAGE(8, "Mage"), WARLOCK(9, "Warlock"), DRUID(11, "Druid");
 
     private int id;
     private String description;

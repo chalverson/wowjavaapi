@@ -28,8 +28,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static org.halverson.wowapi.util.Util.checkArgument;
+import static org.halverson.wowapi.util.Util.checkNotNull;
+
 
 /**
  * Data access object to get Guild information.
@@ -84,7 +85,7 @@ public class GuildDao {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        if(uri == null) {
+        if (uri == null) {
             return null;
         }
 
@@ -97,7 +98,7 @@ public class GuildDao {
 
         if (!errorResponse.getStatus().equals("")) {
             // Would check for specific error here
-            if("Character not found.".equals(errorResponse.getReason())) {
+            if ("Character not found.".equals(errorResponse.getReason())) {
                 throw new CharacterNotFoundException();
             }
 
