@@ -44,6 +44,7 @@ public class BlizzardApiConnection {
             String line;
             StringBuilder sb = new StringBuilder();
             int responseCode = urlConnection.getResponseCode();
+            // Read the correct stream based on the response code.
             if((responseCode == 404) || (responseCode == 500)) {
                 reader = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
             } else {
@@ -54,6 +55,7 @@ public class BlizzardApiConnection {
             }
             ret = sb.toString();
         } catch (IOException e1) {
+            // Some sort of connection error, let's just return some sort of error
             ret = "{\"status\":\"nok\", \"reason\":\"URL Connection Error\"}";
         }
         finally {

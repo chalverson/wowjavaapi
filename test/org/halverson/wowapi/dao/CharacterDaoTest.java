@@ -64,7 +64,7 @@ public class CharacterDaoTest {
 
     @Test(expected = CharacterNotFoundException.class)
     public void testCharacterNotFound() throws Exception {
-        Character character = dao.getCharacter(REALM, "Borvoh1");
+        dao.getCharacter(REALM, "Borvoh1");
     }
 
     @Test
@@ -76,11 +76,6 @@ public class CharacterDaoTest {
         assertThat(character.getReputation().get(0).getStanding(), is(equalTo(7)));
         assertThat(character.getReputation().get(0).getValue(), is(equalTo(999)));
         assertThat(character.getReputation().get(0).getMax(), is(equalTo(999)));
-        /*
-        for (Reputation reputation : character.getReputation()) {
-            System.out.println("Rep: " + reputation);
-        }
-        */
     }
 
     @Test
@@ -90,11 +85,6 @@ public class CharacterDaoTest {
         assertThat(character.getTitles().size(), is(equalTo(27)));
         assertThat(character.getTitles().get(0).getName(), is(equalTo("Knight-Captain %s")));
         assertThat(character.getTitles().get(0).getId(), is(equalTo(8)));
-        /*
-        for (Titles titles : character.getTitles()) {
-            System.out.println(titles);
-        }
-        */
     }
 
     @Test
@@ -133,11 +123,6 @@ public class CharacterDaoTest {
         assertThat(wraith.getSlot(), is(equalTo(0)));
         assertThat(wraith.getName(), is(equalTo("Wraith")));
         assertThat(wraith.isSelected(), is(true));
-        /*
-        for (Pet pet : character.getPets()) {
-            System.out.println(pet);
-        }
-        */
     }
 
     @Test
@@ -165,7 +150,6 @@ public class CharacterDaoTest {
         Profession firstaid = character.getProfessions().getSecondary().get(0);
         assertThat(firstaid.getRank(), is(equalTo(525)));
         assertThat(firstaid.getName(), is(equalTo("First Aid")));
-
     }
 
     @Test
@@ -176,7 +160,6 @@ public class CharacterDaoTest {
         assertThat(mc.getName(), is("Molten Core"));
         assertThat(mc.getBosses().get(0).getNormalKills(), is(equalTo(5)));
         assertThat(mc.getBosses().get(0).getName(), is(equalTo("Ragnaros")));
-        //System.out.println(character.getProgression());
     }
 
     @Test

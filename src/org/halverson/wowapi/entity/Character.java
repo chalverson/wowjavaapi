@@ -23,7 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Class that represents a character. This is the main entry class for the character queries.
+ * Class that represents a character. This is the main entry class for the character queries. It will always fill
+ * the name, level, realm, lastModified and thumbnail fields. Depending on what else is requested the other fields
+ * may be filled in.
  *
  */
 @SuppressWarnings({"UnusedDeclaration"})
@@ -41,10 +43,6 @@ public class Character implements Comparable<Character> {
     private int genderId;
     @SerializedName("class")
     private int classId;
-
-    //private transient Gender gender;
-    @SuppressWarnings({"FieldCanBeLocal"})
-    private transient Race race;
 
     private List<Reputation> reputation = new ArrayList<Reputation>();
 
@@ -137,11 +135,9 @@ public class Character implements Comparable<Character> {
         return reputation;
     }
 
-
     public Integer[] getMounts() {
         return mounts;
     }
-
 
     public CharacterClass getCharacterClass() {
         return CharacterClass.get(classId);
@@ -193,9 +189,6 @@ public class Character implements Comparable<Character> {
 
     public void setRaceId(int raceId) {
         this.raceId = raceId;
-        System.out.println("b4 RACE");
-        this.race = Race.get(raceId);
-
     }
 
     public Race getRace() {
@@ -294,11 +287,6 @@ public class Character implements Comparable<Character> {
         return result;
     }
 
-    /**
-     * Allows sorting by name
-     * @param o Character to compare to
-     * @return
-     */
     @Override
     public int compareTo(Character o) {
         return this.name.compareTo(o.getName());
